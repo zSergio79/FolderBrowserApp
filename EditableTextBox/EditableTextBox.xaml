@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="EditableTextBox.EditableText"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EditableTextBox"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" x:Name="mmm"
+             >
+    <UserControl.Resources>
+        <local:BoolToCollapsedConverter x:Key="true2visible"/>
+        <local:InvBoolToCollapsedConverter x:Key="false2visible"/>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+       
+    </UserControl.Triggers>
+    <Grid MaxHeight="22" VerticalAlignment="Top" HorizontalAlignment="Left">
+        <Label Content="{Binding Path=Text, RelativeSource={RelativeSource AncestorType=UserControl}}" Padding="4.9 2" 
+               Visibility="{Binding Path=IsEdit, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource false2visible}}"
+               SnapsToDevicePixels="True" MouseUp="Label_MouseUp" MouseDown="Label_MouseDown" Grid.Row="0"/>
+        <local:PathTextBox Grid.Row="0"
+            x:Name="txtEdit"
+            Padding="1.5 1 20 1"
+            SnapsToDevicePixels="True" 
+            BorderThickness="0.5"
+            BorderBrush="Black"
+                           
+            Visibility="{Binding Path=IsEdit, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource true2visible}}"
+            IsVisibleChanged="EditableBox_IsVisibleChanged"
+            ToolTipService.Placement="Bottom" ToolTipService.ShowDuration="10"
+                          
+                           ToolTipClosing="TxtEdit_ToolTipClosing" ToolTipOpening="TxtEdit_ToolTipOpening"
+            PreviewLostKeyboardFocus="TextBox_PreviewLostKeyboardFocus" PreviewKeyUp="TextBox_PreviewKeyUp">
+            <local:PathTextBox.Text>
+                <Binding Path="Text" 
+                             RelativeSource="{RelativeSource AncestorType=UserControl}"
+                             Mode="TwoWay"
+                             UpdateSourceTrigger="PropertyChanged">
+                </Binding>
+            </local:PathTextBox.Text>
+
+            <local:PathTextBox.Triggers>
+                
+                        <EventTrigger RoutedEvent="local:PathTextBox.TextInputError">
+                            <BeginStoryboard>
+                                <Storyboard AutoReverse="True" Duration="00:00:01.5">
+                                    <ColorAnimation From="Black" To="Red" Storyboard.TargetProperty="BorderBrush.Color"/>
+                                    <ColorAnimation From="White" To="Pink" Storyboard.TargetProperty="Background.Color"/>
+                                    <!--<ThicknessAnimation From="0.5" To="1.5" Storyboard.TargetProperty="BorderThickness"/>-->
+                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="popup1" Storyboard.TargetProperty="IsOpen" Duration="00:00:01.1"
+                                                                    AutoReverse="True">
+                                        <BooleanAnimationUsingKeyFrames.KeyFrames>
+                                            <DiscreteBooleanKeyFrame KeyTime="00:00:00.0" Value="True" Storyboard.TargetProperty="IsOpen"/>
+                                    <DiscreteBooleanKeyFrame KeyTime="00:00:01.0" Value="False" Storyboard.TargetProperty="IsOpen"/>
+                                </BooleanAnimationUsingKeyFrames.KeyFrames>
+                                    </BooleanAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    
+            </local:PathTextBox.Triggers>
+            <!--<local:PathTextBox.Style>
+                <Style TargetType="local:PathTextBox">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="TextInputError">
+                            <BeginStoryboard>
+                                <Storyboard AutoReverse="True" Duration="00:00:00.5">
+                                    <ColorAnimation From="Black" To="Red" Storyboard.TargetProperty="BorderBrush.Color"/>
+                                    <ColorAnimation From="White" To="Pink" Storyboard.TargetProperty="Background.Color"/>
+                                    --><!--<ThicknessAnimation From="0.5" To="1.5" Storyboard.TargetProperty="BorderThickness"/>--><!--
+                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="popup1" Storyboard.TargetProperty="IsOpen" Duration="00:00:01.5">
+                                        <BooleanAnimationUsingKeyFrames.KeyFrames>
+                                            <DiscreteBooleanKeyFrame KeyTime="00:00:00.0" Value="True" Storyboard.TargetProperty="IsOpen"/>
+                                            <DiscreteBooleanKeyFrame KeyTime="00:00:01.5" Value="False" Storyboard.TargetProperty="IsOpen"/>
+                                        </BooleanAnimationUsingKeyFrames.KeyFrames>
+                                    </BooleanAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </local:PathTextBox.Style>-->
+        </local:PathTextBox>
+        <Popup StaysOpen="False" Name="popup1"> 
+            <StackPanel Background="White">
+                <Label Content="1112121"/>
+            </StackPanel>
+        </Popup>
+    </Grid>
+</UserControl>

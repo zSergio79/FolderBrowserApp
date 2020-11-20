@@ -1,0 +1,24 @@
+﻿<Window x:Class="FolderBrowserApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fb="clr-namespace:FolderBrowserControl;assembly=FolderBrowser"
+        xmlns:edt="clr-namespace:EditableTextBox;assembly=EditableTextBox"
+        xmlns:local="clr-namespace:FolderBrowserApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <fb:FolderBrowser FolderPath="C:\serg\27_10_20_16_16"/>
+        
+        <CheckBox Grid.Row="2" x:Name="checks" Content="IsEdit"/>
+        <edt:EditableText Margin="10 0" Grid.Row="3" IsEdit="{Binding ElementName=checks, Path=IsChecked, Mode=TwoWay}" Text="Another some text"/>
+        <TextBox Grid.Row="1"/>
+    </Grid>
+</Window>
