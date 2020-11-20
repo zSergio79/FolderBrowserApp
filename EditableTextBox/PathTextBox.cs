@@ -10,6 +10,13 @@ namespace EditableTextBox
 {
     public class PathTextBox : TextBox
     {
+        public static readonly DependencyProperty IsErrorProperty = DependencyProperty.Register("IsError",
+            typeof(bool), typeof(PathTextBox),new PropertyMetadata(false));
+        public bool IsError
+            {
+            get{return (bool)GetValue(IsErrorProperty);}
+            set{SetValue(IsErrorProperty,value);}
+}            
         public static RoutedEvent TextInputErrorEvent = EventManager.RegisterRoutedEvent("TextInputError", RoutingStrategy.Bubble,
             typeof(RoutedEventHandler), typeof(PathTextBox));
         public event RoutedEventHandler TextInputError
