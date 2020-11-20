@@ -24,12 +24,8 @@
             SnapsToDevicePixels="True" 
             BorderThickness="0.5"
             BorderBrush="Black"
-                           
             Visibility="{Binding Path=IsEdit, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource true2visible}}"
             IsVisibleChanged="EditableBox_IsVisibleChanged"
-            ToolTipService.Placement="Bottom" ToolTipService.ShowDuration="10"
-                          
-                           ToolTipClosing="TxtEdit_ToolTipClosing" ToolTipOpening="TxtEdit_ToolTipOpening"
             PreviewLostKeyboardFocus="TextBox_PreviewLostKeyboardFocus" PreviewKeyUp="TextBox_PreviewKeyUp">
             <local:PathTextBox.Text>
                 <Binding Path="Text" 
@@ -43,17 +39,10 @@
                 
                         <EventTrigger RoutedEvent="local:PathTextBox.TextInputError">
                             <BeginStoryboard>
-                                <Storyboard AutoReverse="True" Duration="00:00:01.5">
+                                <Storyboard AutoReverse="True" Duration="00:00:00.5">
                                     <ColorAnimation From="Black" To="Red" Storyboard.TargetProperty="BorderBrush.Color"/>
                                     <ColorAnimation From="White" To="Pink" Storyboard.TargetProperty="Background.Color"/>
-                                    <!--<ThicknessAnimation From="0.5" To="1.5" Storyboard.TargetProperty="BorderThickness"/>-->
-                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="popup1" Storyboard.TargetProperty="IsOpen" Duration="00:00:01.1"
-                                                                    AutoReverse="True">
-                                        <BooleanAnimationUsingKeyFrames.KeyFrames>
-                                            <DiscreteBooleanKeyFrame KeyTime="00:00:00.0" Value="True" Storyboard.TargetProperty="IsOpen"/>
-                                    <DiscreteBooleanKeyFrame KeyTime="00:00:01.0" Value="False" Storyboard.TargetProperty="IsOpen"/>
-                                </BooleanAnimationUsingKeyFrames.KeyFrames>
-                                    </BooleanAnimationUsingKeyFrames>
+                                    <!--<ThicknessAnimation From="0.5" To="1.5" Storyboard.TargetProperty="BorderThickness"/>-->                                  
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -81,7 +70,7 @@
                 </Style>
             </local:PathTextBox.Style>-->
         </local:PathTextBox>
-        <Popup StaysOpen="False" Name="popup1"> 
+        <Popup Name="popup1" IsOpen="{Binding ElementName=txtEdit, Path=IsError}"> 
             <StackPanel Background="White">
                 <Label Content="1112121"/>
             </StackPanel>

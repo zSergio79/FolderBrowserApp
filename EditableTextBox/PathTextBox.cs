@@ -13,10 +13,10 @@ namespace EditableTextBox
         public static readonly DependencyProperty IsErrorProperty = DependencyProperty.Register("IsError",
             typeof(bool), typeof(PathTextBox),new PropertyMetadata(false));
         public bool IsError
-            {
-            get{return (bool)GetValue(IsErrorProperty);}
-            set{SetValue(IsErrorProperty,value);}
-}            
+        {
+            get { return (bool)GetValue(IsErrorProperty); }
+            set { SetValue(IsErrorProperty, value); }
+        }            
         public static RoutedEvent TextInputErrorEvent = EventManager.RegisterRoutedEvent("TextInputError", RoutingStrategy.Bubble,
             typeof(RoutedEventHandler), typeof(PathTextBox));
         public event RoutedEventHandler TextInputError
@@ -37,14 +37,17 @@ namespace EditableTextBox
 
         private void PathTextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            if (e.Text != "\r")
+            if (e.Text != "\r" && e.Text != "\u001b")
             {
                 if (e.Text.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) != -1)
                 {
                     e.Handled = true;
                     RoutedEventArgs args = new RoutedEventArgs(TextInputErrorEvent);
                     RaiseEvent(args);
+                    IsError = true;
                 }
+                else
+                    IsError = false;
             }
         }
     }

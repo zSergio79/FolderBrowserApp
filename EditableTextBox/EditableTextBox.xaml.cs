@@ -131,16 +131,6 @@ namespace EditableTextBox
         {
             timestamp = e.Timestamp;
         }
-        #endregion
-
-        private void TxtEdit_ToolTipClosing(object sender, ToolTipEventArgs e)
-        {
-
-        }
-
-        private void TxtEdit_ToolTipOpening(object sender, ToolTipEventArgs e)
-        {
-
-        }
+        #endregion        
     }
 }
